@@ -1,2 +1,4 @@
-class WorkspaceLabel < ApplicationRecord
+class BoardLabel < ApplicationRecord
 end
+
+#change the file name
