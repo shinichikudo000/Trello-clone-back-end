@@ -1,5 +1,6 @@
 class Workspace < ApplicationRecord
-    
+    has_many :board, dependent: destroy
+
     enum visibility: [:public, :private]
     enum tier: [:free, :standard, :premium, :enterprise]
 
