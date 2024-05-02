@@ -8,3 +8,5 @@ class CreateBoardLabels < ActiveRecord::Migration[7.1]
     end
   end
 end
+
+#change file name
