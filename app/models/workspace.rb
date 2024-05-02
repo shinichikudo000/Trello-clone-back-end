@@ -1,6 +1,4 @@
 class Workspace < ApplicationRecord
-    validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
-    validates :description, allow_blank: true
     
     enum visibility: [:public, :private]
     enum tier: [:free, :standard, :premium, :enterprise]
@@ -14,5 +12,8 @@ class Workspace < ApplicationRecord
     scope :standard, -> { where(tier: 'standard')}
     scope :premium, -> { where(tier: 'premium')}
     scope :enterprise, -> { where(tier: 'enterprise')}
+
+    validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
+    validates :description, allow_blank: true
 
 end
