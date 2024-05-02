@@ -1,0 +1,2 @@
+class WorkspaceLabel < ApplicationRecord
+end
