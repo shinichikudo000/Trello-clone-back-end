@@ -2,11 +2,11 @@ class WorkspaceMember < ApplicationRecord
     belongs_to :user
     belongs_to :workspace
 
-    validates :user_id, uniqueness: { scope: :workspace_id }
+    enum :role [:guest, :member, :admin]
 
-    enum :role [:member, :admin]
-
+    scope :guest, -> { where(role: 'guest')}
     scope :member, -> { where(role: 'member')}
     scope :admin, -> { where(role: 'admin')}
     
+    validates :role, numericality { only_integer: true, less_than_or_equal_to: 2}
 end
