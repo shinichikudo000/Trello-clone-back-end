@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_many :workspace_member
   has_many :activities
   has_many :comments
-
+  
 end

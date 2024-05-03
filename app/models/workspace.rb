@@ -14,7 +14,11 @@ class Workspace < ApplicationRecord
     scope :premium, -> { where(tier: 'premium')}
     scope :enterprise, -> { where(tier: 'enterprise')}
 
+    validates :name, presence: true
+    validates :short_name, allow_blank: true
     validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
     validates :description, allow_blank: true
+    validates :tier, numericality: { only_integer: true, less_than_or_equal_to: 3 }, presence: true
+    validates :visibility, numericality: { only_integer: true, less_than_or_equal_to: 1}, presence: true
 
 end
