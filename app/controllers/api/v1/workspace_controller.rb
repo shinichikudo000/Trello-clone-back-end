@@ -1,4 +1,4 @@
-class API::V1::WorkspaceController < ApplicationController
+class API::V1::WorkspaceController < ApplicationController 
     before_action :set_workspace, only: [:show, :destroy]
 
     def index
@@ -10,6 +10,7 @@ class API::V1::WorkspaceController < ApplicationController
     def show
         render json: @workspace.include(:board)
     end
+
     def create
         ActiveRecord::Base.transaction do 
             @workspace = Workspace.new(workspace_params)
@@ -30,10 +31,6 @@ class API::V1::WorkspaceController < ApplicationController
     end
 
     private
-    
-    def set_workspace
-        @workspace = Workspace.find(params[:workspace_id])
-    end
 
     def workspace_params
         params.require(:workspace).permit(:name, :short_name, :description, :website, :visibility, :tier)

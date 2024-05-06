@@ -30,4 +30,11 @@ class Workspace < ApplicationRecord
         self.short_name ||= "userworkspace#{SecureRandom.hex(5)}"
     end
 
+    def can_create_board
+        if free? && self.boards.where(is_closed: false).count >= 10
+            return false
+        else 
+            return true
+        end
+    end
 end

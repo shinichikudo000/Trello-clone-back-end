@@ -4,6 +4,8 @@ class API::V1::BoardsController < ApplicationController
   
     def create
         ActiveRecord::Base.transaction do
+            check_workspace_board_capacity
+
             @board = @workspace.boards.build(board_params)
             create_activities
             build_default_board_labels
@@ -48,15 +50,13 @@ class API::V1::BoardsController < ApplicationController
         ['green', 'yellow', 'orange', 'red', 'purple', 'blue']
     end
   
-    def set_workspace
-        @workspace = Workspace.find(params[:workspace_id])
-    end
-  
-    def set_board
-        @board = Board.find(params[:id])
-    end
-  
     def board_params
         params.require(:board).permit(:name, :visibility, :description)
+    end
+
+    def check_workspace_board_capacity
+        unless @workspace.can_add_board?
+            render json: { error: "Workspace cannot have more than 10 open boards"}, status: :unprocessable_entity
+        end
     end
 end
