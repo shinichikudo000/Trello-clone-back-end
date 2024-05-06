@@ -6,12 +6,18 @@ class API::V1::WorkspaceController < ApplicationController
     end
     
     def create
-        create workspace with the workspace params
-        if save!
-            workspace.tier :free
-            workspace.visibility :private
-            workspace.short_name = workspace id
+        ActiveRecord::Base.transaction do 
+            @workspace = Workspace.new(workspace_params)
+            @workspace.tier = :free
+            @workspace.visibility = :private
             
+            if @workspace.save
+                render json: @workspace, status: :created
+            else
+                render json: @workspace.errors, status: :unprocessable_entity
+                raise ActiveRecord::Rollback
+            end
+        end
     end
 
     private
