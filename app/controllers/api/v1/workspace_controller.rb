@@ -15,7 +15,6 @@ class API::V1::WorkspaceController < ApplicationController
                 render json: @workspace, status: :created
             else
                 render json: @workspace.errors, status: :unprocessable_entity
-                raise ActiveRecord::Rollback
             end
         end
     end
