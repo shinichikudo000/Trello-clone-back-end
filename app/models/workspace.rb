@@ -15,10 +15,19 @@ class Workspace < ApplicationRecord
     scope :enterprise, -> { where(tier: 'enterprise')}
 
     validates :name, presence: true
-    validates :short_name, allow_blank: true
+    validates :short_name, presence: true, uniqueness: true, on: :create
+    validates :short_name, presence: true, on: :update
     validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
     validates :description, allow_blank: true
     validates :tier, numericality: { only_integer: true, less_than_or_equal_to: 3 }, presence: true
     validates :visibility, numericality: { only_integer: true, less_than_or_equal_to: 1}, presence: true
+
+    before_validation :generate_short_name, on: :create
+
+    private
+
+    def generate_short_name
+        self.short_name ||= "userworkspace#{SecureRandom.hex(5)}"
+    end
 
 end
