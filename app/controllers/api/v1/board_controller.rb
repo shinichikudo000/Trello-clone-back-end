@@ -35,7 +35,7 @@ class API::V1::BoardsController < ApplicationController
             "added this board to #{@workspace.name}"
         ]
         activity_descriptions.each do |description|
-            @board.activities.build(workspace: @workspace, activity: description)
+            @board.activities.build(user: current_user, activity: description)
         end
     end
   
