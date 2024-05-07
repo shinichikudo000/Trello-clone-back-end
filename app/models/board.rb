@@ -2,6 +2,8 @@ class Board < ApplicationRecord
     belongs_to :workspace
     
     has_many :lists, dependent: :destroy
+    has_many :cards, dependent: :destroy
+    has_many :board_label, dependent: :destroy
 
     validates :name, presence: true
     validates :description, allow_blank: true

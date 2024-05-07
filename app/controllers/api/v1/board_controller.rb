@@ -1,6 +1,10 @@
 class API::V1::BoardsController < ApplicationController
     before_action :set_workspace, only: [:create, :show]
     before_action :set_board, only: [:show, :destroy]
+
+    def show
+        render json: @board, include: [:lists, :cards]
+    end
   
     def create
         ActiveRecord::Base.transaction do
@@ -16,10 +20,6 @@ class API::V1::BoardsController < ApplicationController
                 render json: @board.errors, status: :unprocessable_entity
             end
         end
-    end
-  
-    def show
-        render json: @board, include: [:lists, :cards]
     end
   
     def destroy
